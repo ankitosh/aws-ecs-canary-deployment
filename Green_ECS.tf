@@ -21,7 +21,7 @@ name = "Green-${var.customer}-${var.appname}-Service-${var.ZONE}-${var.envr}"
 cluster = "${aws_ecs_cluster.blue-cluster.id}"
 task_definition = "${aws_ecs_task_definition.apache2_green.family}:${max("${aws_ecs_task_definition.apache2_green.revision}", "${data.aws_ecs_task_definition.apache2_green.revision}")}"
 desired_count = 3
-iam_role  = "iac-tst-codedeployinstaceprofile"
+iam_role  = "${aws_iam_role.ecs-service-role-1.name}"
   ordered_placement_strategy {
     type  = "binpack"
     field = "cpu"
