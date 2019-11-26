@@ -1,0 +1,19 @@
+[
+    {
+        "volumesFrom": [],
+        "memory": 512,
+        "portMappings": [
+            {
+                "hostPort": 0,
+                "containerPort": 80,
+                "protocol": "tcp"
+            }
+        ],
+        "essential": true,
+        "mountPoints": [],
+        "name": "apache2",
+        "environment": [],
+        "image": "apache2",
+        "cpu": 5
+    }
+]
