@@ -1,5 +1,5 @@
 resource "aws_efs_file_system" "wordpress-data" {
-  creation_token = "es-persistent-data"
+  creation_token   = "es-persistent-data"
   performance_mode = "generalPurpose"
 
   tags = {
@@ -8,6 +8,7 @@ resource "aws_efs_file_system" "wordpress-data" {
 }
 
 resource "aws_efs_mount_target" "wordpress" {
+  # count           = "${count(aws_subnet.private_subnet.*.id)}"
   file_system_id = "${aws_efs_file_system.wordpress-data.id}"
-  subnet_id      = "${var.public_subnets_efs}"
+  subnet_id      = "${aws_subnet.private_subnet.*.id}"
 }

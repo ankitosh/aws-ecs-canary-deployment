@@ -3,31 +3,30 @@
 # }
 
 data "aws_ecs_task_definition" "apache2_green" {
-task_definition = "${aws_ecs_task_definition.apache2_green.family}"
-depends_on = ["aws_ecs_task_definition.apache2_green"]
+  task_definition = "${aws_ecs_task_definition.apache2_green.family}"
+  depends_on      = ["aws_ecs_task_definition.apache2_green"]
 }
-
 
 resource "aws_ecs_task_definition" "apache2_green" {
-family = "apache2_green"
-container_definitions  = "${file("green_task_definition.json")}"
-requires_compatibilities = ["EC2"]
-network_mode            = "bridge"        
+  family                   = "apache2_green"
+  container_definitions    = "${file("green_task_definition.json")}"
+  requires_compatibilities = ["EC2"]
+  network_mode             = "bridge"
 }
 
-
 resource "aws_ecs_service" "ecs-service" {
-name = "Green-${var.customer}-${var.appname}-Service-${var.ZONE}-${var.envr}"
-cluster = "${aws_ecs_cluster.blue-cluster.id}"
-task_definition = "${aws_ecs_task_definition.apache2_green.family}:${max("${aws_ecs_task_definition.apache2_green.revision}", "${data.aws_ecs_task_definition.apache2_green.revision}")}"
-desired_count = 3
-iam_role  = "${aws_iam_role.ecs-service-role-1.name}"
+  name            = "Green-${var.customer}-${var.appname}-Service-${var.ZONE}-${var.envr}"
+  cluster         = "${aws_ecs_cluster.blue-cluster.id}"
+  task_definition = "${aws_ecs_task_definition.apache2_green.family}:${max("${aws_ecs_task_definition.apache2_green.revision}", "${data.aws_ecs_task_definition.apache2_green.revision}")}"
+  desired_count   = 3
+  iam_role        = "${aws_iam_role.ecs-service-role-1.name}"
+
   ordered_placement_strategy {
     type  = "binpack"
     field = "cpu"
   }
 
-/*
+  /*
   ordered_placement_strategy {
     type  = "spread"
     field = "instanceId"
@@ -35,12 +34,12 @@ iam_role  = "${aws_iam_role.ecs-service-role-1.name}"
 
 */
 
-load_balancer {
-target_group_arn = "${aws_alb_target_group.green-tg.arn}"
-container_name = "apache2"
-container_port = "80"
-}
-depends_on = ["aws_ecs_service.ecs-service"]
+  load_balancer {
+    target_group_arn = "${aws_alb_target_group.green-tg.arn}"
+    container_name   = "apache2"
+    container_port   = "80"
+  }
+  depends_on = ["aws_ecs_service.ecs-service"]
 }
 
 resource "aws_appautoscaling_target" "green" {
@@ -52,10 +51,10 @@ resource "aws_appautoscaling_target" "green" {
   role_arn           = "${aws_iam_role.ecs-service-role-1.arn}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
-  depends_on        = ["aws_ecs_service.test-ecs-service"]
+  depends_on         = ["aws_ecs_service.test-ecs-service"]
+
   #depends_on        =      [${"aws_ecs_service.test-ecs-service.id "}]
 }
-
 
 // Memory Utilization
 
@@ -94,8 +93,9 @@ resource "aws_cloudwatch_metric_alarm" "memory_high_1" {
   statistic           = "Average"
   threshold           = "60"
   treat_missing_data  = "notBreaching"
+
   #ok_actions          = ["${compact(var.scale_out_ok_actions)}"]
-  alarm_actions       = ["${aws_appautoscaling_policy.memory_high_1.arn}"]
+  alarm_actions = ["${aws_appautoscaling_policy.memory_high_1.arn}"]
 
   dimensions = {
     ClusterName = "${aws_ecs_cluster.blue-cluster.name}"
@@ -104,7 +104,7 @@ resource "aws_cloudwatch_metric_alarm" "memory_high_1" {
 }
 
 resource "aws_appautoscaling_policy" "memory_low_1" {
- # count = "${ lookup(var.scale_in_thresholds, "memory", "") != "" ? 1 : 0 }"
+  # count = "${ lookup(var.scale_in_thresholds, "memory", "") != "" ? 1 : 0 }"
 
   name               = "Green-${var.customer}-${var.appname}-Service-${var.ZONE}-${var.envr}-scale_in-memory_utilization"
   resource_id        = "${aws_appautoscaling_target.green.resource_id}"
@@ -138,8 +138,9 @@ resource "aws_cloudwatch_metric_alarm" "memory_low_1" {
   statistic           = "Average"
   threshold           = "30"
   treat_missing_data  = "notBreaching"
+
   #ok_actions          = ["${compact(var.scale_in_ok_actions)}"]
-  alarm_actions       = ["${aws_appautoscaling_policy.memory_low_1.arn}"]
+  alarm_actions = ["${aws_appautoscaling_policy.memory_low_1.arn}"]
 
   dimensions = {
     ClusterName = "${aws_ecs_cluster.blue-cluster.name}"
@@ -150,7 +151,7 @@ resource "aws_cloudwatch_metric_alarm" "memory_low_1" {
 // CPU Utilization
 
 resource "aws_appautoscaling_policy" "cpu_high_1" {
-# count = "${ lookup(var.scale_out_thresholds, "cpu", "") != "" ? 1 : 0 }"
+  # count = "${ lookup(var.scale_out_thresholds, "cpu", "") != "" ? 1 : 0 }"
 
   name               = "Green-${var.customer}-${var.appname}-Service-${var.ZONE}-${var.envr}-scale_out-cpu_utilization"
   resource_id        = "${aws_appautoscaling_target.green.resource_id}"
@@ -172,7 +173,7 @@ resource "aws_appautoscaling_policy" "cpu_high_1" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu_high_1" {
-#  count = "${ lookup(var.scale_out_thresholds, "cpu", "") != "" ? 1 : 0 }"
+  #  count = "${ lookup(var.scale_out_thresholds, "cpu", "") != "" ? 1 : 0 }"
 
   alarm_name          = "Green-${var.customer}-${var.appname}-Service-${var.ZONE}-${var.envr}-CPUUtilization-High"
   alarm_description   = "scale-out pushed by cpu-utilization"
@@ -184,8 +185,9 @@ resource "aws_cloudwatch_metric_alarm" "cpu_high_1" {
   statistic           = "Average"
   threshold           = "60"
   treat_missing_data  = "notBreaching"
+
   #ok_actions          = ["${compact(var.scale_out_ok_actions)}"]
-  alarm_actions       = ["${aws_appautoscaling_policy.cpu_high_1.arn}"]
+  alarm_actions = ["${aws_appautoscaling_policy.cpu_high_1.arn}"]
 
   dimensions = {
     ClusterName = "${aws_ecs_cluster.blue-cluster.name}"
@@ -216,7 +218,7 @@ resource "aws_appautoscaling_policy" "cpu_low_1" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu_low_1" {
-#  count = "${ lookup(var.scale_in_thresholds, "cpu", "") != "" ? 1 : 0 }"
+  #  count = "${ lookup(var.scale_in_thresholds, "cpu", "") != "" ? 1 : 0 }"
 
   alarm_name          = "Green-${var.customer}-${var.appname}-Service-${var.ZONE}-${var.envr}-CPUUtilization-Low"
   alarm_description   = "scale-in pushed by cpu-utilization"
@@ -228,8 +230,9 @@ resource "aws_cloudwatch_metric_alarm" "cpu_low_1" {
   statistic           = "Average"
   threshold           = "30"
   treat_missing_data  = "notBreaching"
+
   #ok_actions          = ["${compact(var.scale_in_ok_actions)}"]
-  alarm_actions       = ["${aws_appautoscaling_policy.cpu_low_1.arn}"]
+  alarm_actions = ["${aws_appautoscaling_policy.cpu_low_1.arn}"]
 
   dimensions = {
     ClusterName = "${aws_ecs_cluster.blue-cluster.name}"

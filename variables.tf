@@ -1,12 +1,12 @@
 ####################### TAGS Reference############################ 
-  
+
 variable "appname" {
-  default = "Blue"
+  default = "BLUE"
 }
 
 variable "owner" {
-  type = "string"
-  default = "TEST"
+  type    = "string"
+  default = "ANKIT"
 }
 
 variable "ZONE" {
@@ -15,29 +15,23 @@ variable "ZONE" {
 }
 
 variable "envr" {
-  default     = "T"
+  default = "T"
 }
-
-
 
 ################################################################## 
 variable "environment" {
   description = "Name of the environment"
-  default = "TEST"
+  default     = "TEST"
 }
 
 variable "aws_region" {
   description = "AWS region"
-  default = ""
-}
-
-variable "security_groups"{
-  default = ["",""]
+  default     = ""
 }
 
 variable "ecs_key_pair_name" {
   description = "EC2 instance key pair name"
-  default = "test"
+  default     = ""
 }
 
 variable "customer" {
@@ -46,55 +40,47 @@ variable "customer" {
 
 variable "ecs_cluster" {
   description = "ECS cluster name"
-  default = "BLUE"
+  default     = "BLUE"
 }
 
-variable "ecs_cluster_green"{
+variable "ecs_cluster_green" {
   default = "GREEN"
 }
 
-variable "vpc_id" {
-  description = "VPC id for Test environment"
-  default = "YOUR VPC ID"
-}
-
 variable "vpc_cidr" {
-  description = "IP addressing for Test Network"
-  default = "your vpc cidr"
+  description = "VPC CIDR for Test environment"
+  default     = "10.0.0.0/16"
 }
 
-variable "public_subnet_cidrs" {
+variable "public_subnet_cidr" {
   description = "Public 0.0 CIDR for externally accessible subnet"
-  type = "list"
-  default = ["your subnets", "your subnet"]
+  type        = "list"
+  default     = ["10.0.1.0/24", "10.0.2.0/24"]
 }
 
-
-variable "public_subnets" {
-  type = "list"
-  default = ["YOUR PUBLIC SUBNET ","YOUR PUBLIC SUBNET"]
+variable "private_subnet_cidr" {
+  default = ["10.0.5.0/24", "10.0.6.0/24"]
 }
 
-variable "public_subnets_efs" {
-  default = "EFS SUBNETS"
+variable "az" {
+  default = ["eu-west-1a", "eu-west-1b"]
 }
-# variable "private_subnets" {}
 
 ########################### Autoscale Config ################################
 
 variable "max_instance_size" {
   description = "Maximum number of instances in the cluster"
-  default = "3"
+  default     = "3"
 }
 
 variable "min_instance_size" {
   description = "Minimum number of instances in the cluster"
-  default = "1"
+  default     = "1"
 }
 
 variable "desired_capacity" {
   description = "Desired number of instances in the cluster"
-  default = "1"
+  default     = "1"
 }
 
 variable "container_name" {
@@ -102,26 +88,23 @@ variable "container_name" {
 }
 
 
-# variable "domain_name" {
-#   description = "Domain name of the Hosted Zone"
-# }
-
-# variable "role_arn" {
-#   default = ""
-#   description = "Role to manage ecs task scaling"
-# }
-
-
 #########################RDS My SQL ###########################
 
-# variable "db_admin" {
-#   default = ""
-# }
 
-# variable "db_password" {
-#   default = ""
-# }
+variable "db_admin" {
+  default = ""
+}
 
-# variable "db_instance_size" {
-#   default = "db.t2.micro"
-# }
+
+variable "db_password" {
+  default = ""
+}
+
+
+variable "db_instance_size" {
+  default = "db.t2.micro"
+}
+
+variable "domain_name" {
+  default = ""
+}
