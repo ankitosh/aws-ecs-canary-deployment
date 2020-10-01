@@ -4,7 +4,7 @@
 # About this Project
 This Project creates Highly Avaialable *WORDPRESS* website where MySQl DB is *RDS* and Persistent Storage using *EFS*.
 
-[! [AWS-HA-ARCHITECTURE](/template/aws-ha-wp.png)]
+![AWS-HA-ARCHITECTURE](/template/aws-ha-wp.png)
 
 ### This Project Demonstrate AWS ECS Canary Deployment 
 #### What is Canary Deployment ?
