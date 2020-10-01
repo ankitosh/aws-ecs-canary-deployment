@@ -32,7 +32,24 @@ Find more info at [AWS Documentation](https://docs.aws.amazon.com/apigateway/lat
 - All the variables are stored in *variables.tf* for Generic Deployment.
 
 
+### How to Use.
+1. Clone Current Repository.
+   - `git clone https://github.com/ankitosh/aws-ecs-canary-deployment.git` 
+2. Create config.tf file with below below details 
+    ***
+        data "aws_caller_identity" "current" {}
 
+        provider "aws" {
+        region = "${var.aws_region}"
+        }
 
+        terraform {
+        backend "s3" {
+            bucket = "Your S3 Bucket Name"
+            key    = "Your File Name.tfstate"
+            region = "region of choice"
+        }
+        }
+    ***
 
 
