@@ -35,10 +35,9 @@ Find more info at [AWS Documentation](https://docs.aws.amazon.com/apigateway/lat
 ### How to Use.
 1. Clone Current Repository.
    - `git clone https://github.com/ankitosh/aws-ecs-canary-deployment.git` 
-2. Create config.tf file with below details 
+2. Create config.tf file with below details.
     ***
         data "aws_caller_identity" "current" {}
-
         provider "aws" {
         region = "${var.aws_region}"
         }
