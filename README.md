@@ -64,7 +64,7 @@ Find more info at [AWS Documentation](https://docs.aws.amazon.com/apigateway/lat
 5. After Successfull Initialization you can run *PLAN* your resources.
     `terraform plan -var-file=yourvarsfile.tfvars`
 6. Once verified the resources you can Deploy it for production use.
-    `terraform apply`
+    `terraform apply -var-file=yourvarsfile.tfvars`
 
 
 # Future Scope
