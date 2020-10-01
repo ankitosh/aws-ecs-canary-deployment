@@ -67,3 +67,6 @@ Find more info at [AWS Documentation](https://docs.aws.amazon.com/apigateway/lat
     `terraform apply`
 
 
+# Future Scope
+1. Cloudfront 
+2. Web Application Firewall
