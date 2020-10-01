@@ -4,7 +4,7 @@
 # About this Project
 This Project creates Highly Avaialable *WORDPRESS* website where MySQl DB is *RDS* and Persistent Storage using *EFS*.
 
-[![AWS-HA-ARCHITECTURE](/template/aws-ha-wp.png)]
+[! [AWS-HA-ARCHITECTURE](/template/aws-ha-wp.png)]
 
 ### This Project Demonstrate AWS ECS Canary Deployment 
 #### What is Canary Deployment ?
@@ -15,7 +15,7 @@ This Project creates Highly Avaialable *WORDPRESS* website where MySQl DB is *RD
 
 Find more info at [AWS Documentation](https://docs.aws.amazon.com/apigateway/latest/developerguide/canary-release.html)
 
-# We will create the Following Resources
+# We will create following resources
 - Application Load Balancer  *alb.tf*
 - AutoScaling Group with Max 3 Instance and Min 1 Instance *asg.tf*
 - Blue ECS Cluster Group for our Blue means Production release worklaod  *Blue_ECS.tf*
