@@ -51,5 +51,19 @@ Find more info at [AWS Documentation](https://docs.aws.amazon.com/apigateway/lat
         }
         }
     ***
+3. Create .tfvars file with secret info
+    ***
+        aws_region  = "eu-west-1"
+        ecs_key_pair_name   = ""
+        db_admin            = ""
+        db_password         = ""
+        domain_name         = ""
+    ***
+4. Run Terraform Initialization Command
+    ` terraform init`
+5. After Successfull Initialization you can run *PLAN* your resources.
+    `terraform plan -var-file=yourvarsfile.tfvars`
+6. Once verified the resources you can Deploy it for production use.
+    `terraform apply`
 
 
