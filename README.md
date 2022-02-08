@@ -1,5 +1,5 @@
 # AWS ECS CANARY
-## Highly Available Application
+## Highly Available Wordpress Application
 
 # About this Project
 This Project creates Highly Available ***WORDPRESS*** website where MySQl DB is *RDS* and Persistent Storage using *EFS*.
